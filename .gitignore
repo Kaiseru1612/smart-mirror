@@ -139,3 +139,6 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+forcastIO\apikey.py
+src/forcastIO/apikey.py
