@@ -1,9 +1,9 @@
 import requests
 class NewsFetcher:
     url = "https://newsapi.org/v1/articles"
-    apiKey = ""
-    def __init__(self, apiKey):
-        self.apiKey = apiKey
+    apiKey = "523505cd243b45d599b136431677a833"
+    def __init__(self):
+        self.apiKey = "523505cd243b45d599b136431677a833"
     def FetchFromBBC(self):
         query_params = {
             "source": "bbc-news",

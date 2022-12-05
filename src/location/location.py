@@ -20,3 +20,7 @@ class UserLocation:
     
     def get_user_long(self):
         return self.user_long
+
+a = UserLocation()
+a.get_location()
+print(a.user_lat)
