@@ -47,7 +47,7 @@ BKUni = environtment_variable.BKUni
 
 class Weather:
 	def __init__(self, lat, long) -> None:
-		self.api_key = apikey.API_KEY
+		self.api_key = 'e2fea81b36c2588f1315c4ad2b721989'
 		self.location = [lat, long]
 		self.temperature=0
 		self.humidity=0
