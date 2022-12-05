@@ -1,8 +1,9 @@
 from forecastiopy import *
-from . import apikey
+# from . import apikey
 import environtment_variable
 
 BKUni = environtment_variable.BKUni
+API_KEY='e2fea81b36c2588f1315c4ad2b721989'
 
 # fio = ForecastIO.ForecastIO(api_key,
 #                             units=ForecastIO.ForecastIO.UNITS_SI,
@@ -47,7 +48,7 @@ BKUni = environtment_variable.BKUni
 
 class Weather:
 	def __init__(self, lat, long) -> None:
-		self.api_key = apikey.API_KEY
+		self.api_key = API_KEY
 		self.location = [lat, long]
 		self.temperature=0
 		self.humidity=0
@@ -62,15 +63,15 @@ class Weather:
 	def get_current_weatherforecast(self):
 		if self.fio.has_currently() is True:
 			currently = FIOCurrently.FIOCurrently(self.fio)
-			print('Currently')
-			for item in currently.get().keys():
-				print(item + ' : ' + str(currently.get()[item]))
-			print()
+			# print('Currently')
+			# for item in currently.get().keys():
+			# 	print(item + ' : ' + str(currently.get()[item]))
+			# print()
         	# Or access attributes directly
 			self.temperature = currently.temperature
 			self.humidity  = currently.humidity
-			print('current temperature: ' + str(currently.temperature))
-			print('current humidity; ' + str(currently.humidity))
-			print()
+			# print('current temperature: ' + str(currently.temperature))
+			# print('current humidity; ' + str(currently.humidity))
+			# print()
 		else:
 			print('No Currently data')
