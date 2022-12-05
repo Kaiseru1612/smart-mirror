@@ -8,11 +8,17 @@ from pathlib import Path
 # from tkinter import *
 # Explicit imports to satisfy Flake8
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
-
+from forcastIO.forecastIO import Weather
+from location.location import UserLocation
+from newspaper.NewsFetcher import NewsFetcher
+import time
+import calendar
+from datetime import date
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"../assets/frame0")
 
+today = date.today()
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
@@ -23,6 +29,24 @@ window = Tk()
 window.geometry("480x280")
 window.configure(bg = "#BFBFBF")
 
+
+location = UserLocation()
+location.get_location()
+print(location.get_user_long())
+print('---')
+print(location.get_user_lat())
+lat = location.get_user_lat()
+long = location.get_user_long()
+weather = Weather(lat, long)
+weather.create_fio()
+weather.get_current_weatherforecast()
+# print(weather.temperature)
+# print(weather.humidity)
+news = NewsFetcher("523505cd243b45d599b136431677a833")
+# print(news.FetchFromBBC())
+
+t = time.localtime()
+current_time = time.strftime("%H:%M", t)
 
 canvas = Canvas(
     window,
@@ -80,7 +104,7 @@ canvas.create_text(
     66.72000122070312,
     52.866668701171875,
     anchor="nw",
-    text="32°C\n",
+    text=weather.temperature,
     fill="#FFFFFF",
     font=("Inter SemiBold", 10 * -1)
 )
@@ -89,7 +113,7 @@ canvas.create_text(
     103.0,
     130.0,
     anchor="nw",
-    text="16°C\n",
+    text="32°C\n",
     fill="#FFFFFF",
     font=("Inter SemiBold", 8 * -1)
 )
@@ -98,7 +122,7 @@ canvas.create_text(
     103.0,
     154.0,
     anchor="nw",
-    text="15°C\n",
+    text="31°C\n",
     fill="#FFFFFF",
     font=("Inter SemiBold", 8 * -1)
 )
@@ -107,7 +131,7 @@ canvas.create_text(
     104.0,
     177.0,
     anchor="nw",
-    text="11°C\n",
+    text="33°C\n",
     fill="#FFFFFF",
     font=("Inter SemiBold", 8 * -1)
 )
@@ -116,7 +140,7 @@ canvas.create_text(
     103.0,
     200.0,
     anchor="nw",
-    text="12°C\n",
+    text="32°C\n",
     fill="#FFFFFF",
     font=("Inter SemiBold", 8 * -1)
 )
@@ -125,7 +149,7 @@ canvas.create_text(
     102.0,
     225.0,
     anchor="nw",
-    text="25°C\n",
+    text="31°C\n",
     fill="#FFFFFF",
     font=("Inter SemiBold", 8 * -1)
 )
@@ -134,7 +158,7 @@ canvas.create_text(
     102.0,
     248.0,
     anchor="nw",
-    text="26°C\n",
+    text="33°C\n",
     fill="#FFFFFF",
     font=("Inter SemiBold", 8 * -1)
 )
@@ -152,7 +176,7 @@ canvas.create_text(
     365.0,
     58.0,
     anchor="nw",
-    text="November 16, 2022",
+    text=today.strftime("%B %d, %Y"),
     fill="#FFFFFF",
     font=("Inter SemiBold", 8 * -1)
 )
@@ -161,7 +185,7 @@ canvas.create_text(
     396.0,
     30.0,
     anchor="nw",
-    text="Sunday",
+    text=calendar.day_name[today.weekday()],
     fill="#FFFFFF",
     font=("Inter Bold", 12 * -1)
 )
@@ -170,7 +194,7 @@ canvas.create_text(
     389.0,
     76.0,
     anchor="nw",
-    text="3:11 pm",
+    text=current_time,
     fill="#FFFFFF",
     font=("Inter Bold", 14 * -1)
 )
@@ -273,18 +297,11 @@ canvas.create_text(
     374.0,
     130.0,
     anchor="nw",
-    text="Article title ",
+    text=news.FetchFromBBC()[0],
     fill="#FFFFFF",
     font=("Inter Bold", 12 * -1)
 )
 
-canvas.create_text(
-    374.0,
-    152.0,
-    anchor="nw",
-    text="Description ...",
-    fill="#FFFFFF",
-    font=("Inter Regular", 8 * -1)
-)
+
 window.resizable(False, False)
 window.mainloop()

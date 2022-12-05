@@ -17,6 +17,6 @@ class NewsFetcher:
         for ar in article:
             results.append(ar["title"])      
         return results
-# example 
-news = NewsFetcher("523505cd243b45d599b136431677a833")
-print(news.FetchFromBBC())
+
+# news = NewsFetcher("523505cd243b45d599b136431677a833")
+# print(news.FetchFromBBC())

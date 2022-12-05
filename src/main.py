@@ -1,6 +1,7 @@
 from unittest import case
 from forcastIO.forecastIO import Weather
 from location.location import UserLocation
+from newspaper.NewsFetcher import NewsFetcher
 
 def init():
     location = UserLocation()
