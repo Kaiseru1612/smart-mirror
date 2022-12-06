@@ -11,12 +11,14 @@ class NewsFetcher:
             "apiKey": self.apiKey
         }
         res = requests.get(self.url, params=query_params)
-        open_bbc_page = res.json()
-        article = open_bbc_page["articles"]
-        results = []    
-        for ar in article:
-            results.append(ar["title"])      
-        return results
+        # print(res)
+        # return res.json()
+        # open_bbc_page = res.json()
+        # article = open_bbc_page["articles"]
+        # results = []    
+        # for ar in article:
+        #     results.append(ar["title"])      
+        # return results
 
-# news = NewsFetcher("523505cd243b45d599b136431677a833")
+# news = NewsFetcher()
 # print(news.FetchFromBBC())

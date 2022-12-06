@@ -42,8 +42,8 @@ weather = Weather(lat, long)
 # weather.get_current_weatherforecast()
 print(weather.temperature)
 print(weather.humidity)
-news = NewsFetcher()
-print(news.FetchFromBBC())
+# news = NewsFetcher()
+# print(news.FetchFromBBC())
 
 t = time.localtime()
 current_time = time.strftime("%H:%M", t)
@@ -297,7 +297,7 @@ canvas.create_text(
     374.0,
     130.0,
     anchor="nw",
-    text=news.FetchFromBBC()[0],
+    text="Brazil dismantle South Korea to dance into quarter-finals",
     fill="#FFFFFF",
     font=("Inter Bold", 12 * -1)
 )

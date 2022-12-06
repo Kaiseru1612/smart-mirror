@@ -6,6 +6,11 @@ from forcastIO.forecastIO import Weather
 from location.location import UserLocation
 from newspaper.NewsFetcher import NewsFetcher
 from gui import window
+from voice_recognition.music_control import listen_input
+
+import speech_recognition as sr
+import pygame
+recognizer = sr.Recognizer()
 
 location_flag = False
 weather_flag = False
@@ -32,7 +37,7 @@ def init_state():
     # weather.create_fio()
     
     global news
-    news = NewsFetcher()
+    news = "Brazil dismantle South Korea to dance into quarter-finals"
 
     global init_flag 
     init_flag = True
@@ -48,7 +53,8 @@ def fetch_data():
     weather_flag = True
 
     global news
-    news.FetchFromBBC()
+    # news.FetchFromBBC()
+    news = "Brazil dismantle South Korea to dance into quarter-finals"
     global news_flag
     news_flag = True
 
@@ -62,13 +68,37 @@ def display_data():
         display_counter += 1
     else:
         window.quit()
+    with sr.Microphone() as source:
+        global result_string 
+        result_string = listen_input(recognizer, source)
+        if(result_string!=""):
+            global voice_received
+            voice_received = True
 
 
 def process_voice():
+    if ("nhạc" in result_string) or ("music" in result_string):
+            pygame.mixer.init()
+            pygame.mixer.music.load(musiclist[index])
+            pygame.mixer.music.play()
+    if ("dừng" in result_string) or ("stop" in result_string):
+            pygame.mixer.music.pause()
+    if "tiếp theo" in result_string and index < len(musiclist) - 1:
+            index = index + 1
+            pygame.mixer.init()
+            pygame.mixer.music.load(musiclist[index])
+            pygame.mixer.music.play()
+    if "lùi lại" in result_string and index > 0:
+            index = index - 1
+            pygame.mixer.init()
+            pygame.mixer.music.load(musiclist[index])
+            pygame.mixer.music.play()
+    pass
     pass
 
 def execute_command():
-    pass
+    global result_string
+
 
 def switch(state):
     return switcher.get(state)()
@@ -92,15 +122,20 @@ def switch_state():
     global news_flag
     global current_state
     global display_counter
+    global voice_received
     if init_flag is True and weather_flag is False:
         current_state = 2
     elif location_flag is True and weather_flag is True and news_flag is True and display_counter < 10:
         current_state = 3
-    elif display_counter >= 10:
+    elif display_counter >= 10 and not voice_received:
         weather_flag = False
         news_flag = False
         display_counter = 0
         current_state = 2
+    elif voice_received:
+        current_state = 4
+    
+
 
     print(display_counter)
     print(current_state)
@@ -117,6 +152,10 @@ def run_state():
         switch(2)
     elif current_state == 3:
         switch(3)
+    elif current_state == 4:
+        switch(4)
+    elif current_state == 5:
+        switch(5)
 
 def main_program():
     # location = UserLocation()
